@@ -1,0 +1,9 @@
+{
+	"port": 3000,
+	"mongoose": {
+		"url": "mongodb://localhost/chat",
+		"options": {
+			"useMongoClient": true
+		}
+	}
+}
