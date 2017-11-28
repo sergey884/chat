@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var config = require('./config/index');
 var logger = require('./libs/log');
+const sendHttpError = require('./middleware/sendHttpError');
+const { HttpError } = require('./error');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -27,26 +29,43 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger.log('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(sendHttpError({ app }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', routes);
 app.use('/users', users);
 
+// console.log("HttpError", HttpError);
+app.use(function(err, req, res, next) {
+  if (typeof err === 'number') {
+    err = new HttpError(err);
+  } 
+
+  if( err instanceof HttpError ) {
+    res.sendHttpError(err);
+  }
+});
+
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
+*/
 // error handlers
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+/*if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -65,6 +84,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
+*/
 
 module.exports = app;

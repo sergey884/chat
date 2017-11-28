@@ -14,6 +14,22 @@ MongoClient.connect(url, function(err, db) {
 	// console.log(collection);
 });*/
 
+function open(callback) {
+	mongoose.connect.on("open", callback);
+}
+
+function dropDatabase() {
+
+}
+
+function createUsers() {
+
+}
+
+function close() {
+
+}
+
 const { User } = require('./models/user');
 
 const user = new User({
