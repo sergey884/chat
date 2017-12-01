@@ -5,5 +5,14 @@
 		"options": {
 			"useMongoClient": true
 		}
+	},
+	"session": {
+		"secret": "nodejs",
+		"key": "sid",
+		"cookie": {
+			"path": "/",
+			"httpOnly": true,
+			"maxAge": null
+		}
 	}
 }

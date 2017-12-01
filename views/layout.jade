@@ -3,5 +3,13 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css',  crossorigin='anonymous')
   body
+    nav(class="navbar navbar-inverse bg-inverse navbar-toggleable-md navbar-light bg-faded")
+      div(class="collapse navbar-collapse")
+        ul(class="navbar-nav mr-auto")
+          li(class="nav-item")
+           a(class="nav-link", href="/") Home
+          li(class="nav-item")
+            a(class="nav-link", href="/login") Login
     block content

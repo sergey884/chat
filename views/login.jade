@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	script(type="text/javascript", async=true, src="/javascripts/login.js")
+	form(
+		name="loginForm"
+		method="POST",
+		action="/login"
+	)
+		div(class="form-group")
+			label(for="login") Login
+			input(type="text", name="login", class="form-control", placeholder="Login")
+		div(class="form-group")
+			label(for="password") Password
+			input(type="password", name="password", class="form-control", placeholder="Password")
+		button(type="submit", class="btn btn-primary", onClick="sendUserDate()") SIGN IN

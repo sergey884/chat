@@ -9,9 +9,11 @@ var config = require('./config/index');
 var logger = require('./libs/log');
 const sendHttpError = require('./middleware/sendHttpError');
 const { HttpError } = require('./error');
+const mongoose = require('./libs/mongoose');
+var session = require('express-session');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 
 var app = express();
 app.set("port", config.get('port'));
@@ -36,11 +38,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(sendHttpError({ app }));
 
 app.use(cookieParser());
+
+const MongoStore = require("connect-mongo")(session);
+// console.log(mongoose.connection);
+app.use(session({
+  secret: config.get("session:secret"),
+  key: config.get("session:key"),
+  cookie: config.get("session:cookie"),
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
+}));
+
+app.use(function(req, res, next) {
+  req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+  // res.send("VISITS: " + req.session.numberOfVisits);
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
 
 // console.log("HttpError", HttpError);
 app.use(function(err, req, res, next) {
