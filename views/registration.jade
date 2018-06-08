@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	script(type="text/javascript", async=true, src="/javascripts/registration.js")
+	form(
+		name="registrationForm"
+		method="POST",
+		action="/registration"
+	)
+		div(class="form-group")
+			label(for="username") Username
+			input(type="text", name="username", class="form-control", placeholder="Username")
+		div(class="form-group")
+			label(for="email") E-mail
+			input(type="text", name="email", class="form-control", placeholder="E-mail")
+		div(class="form-group")
+			label(for="password") Password
+			input(type="password", name="password", class="form-control", placeholder="Password")
+		div(class="form-group")
+			label(for="repeat-password") repeat-password
+			input(type="password", name="repeat-password", class="form-control", placeholder="Password")
+		button(type="button", class="btn btn-primary", onClick="registerUser()") REGISTER

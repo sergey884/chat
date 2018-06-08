@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./app.js",
     "dev": "supervisor ./app.js",
-    "debug": "mode debug ./app.js"
+    "debug": "node debug ./app.js",
+    "inspect": "node inspect ./app.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

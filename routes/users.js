@@ -14,7 +14,6 @@ const { HttpError } = require('../error');
 });
 */
 module.exports.get = function(req, res, next) {
-	console.log("USERS");
 	User.findById(req.params.id, function(err, user) {
 		if(err) return next(err);
 		if(!user) {

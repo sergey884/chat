@@ -18,16 +18,17 @@ function open(callback) {
 	mongoose.connect.on("open", callback);
 }
 
-function dropDatabase() {
-
+function dropDatabase(callback) {
+	const db = mongoose.connection.db;
+	db.dropDatabase(callback);
 }
 
 function createUsers() {
 
 }
 
-function close() {
-
+function close(callback) {
+	mongoose.disconnect(callback);
 }
 
 const { User } = require('./models/user');

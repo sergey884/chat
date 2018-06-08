@@ -53,7 +53,7 @@ UserSchema.statics.authorize = function(login, password, callback) {
 			User.findOne({username: login}, callback);
 		},
 		function(user, callback) {
-			console.log("user");
+			console.log("user", user);
 			if(user) {
 				if(user.checkPassword(password)) {
 					callback(null, user);
@@ -73,6 +73,41 @@ UserSchema.statics.authorize = function(login, password, callback) {
 		}
 	], callback);
 }
+
+UserSchema.statics.addNewUser = function(userData, callback) {
+	let User = this;
+
+	const {
+		login,
+		email,
+		password,
+		repeatedPassword,
+	} = userData;
+
+	async.waterfall([
+		function (callback) {
+			User.findOne({ username: login }, callback);
+		},
+		function(user, callback) {
+			if (!user) {
+				if( password === repeatedPassword ) {
+					const newUser = new User({
+						username: login,
+						password: password,
+					});
+					newUser.save(function(err) {
+						if (err) throw err;
+					})
+				} else {
+					const err = 'Password and password repetition is not equal';
+					callback(null, err);
+				}
+			}
+			console.log("user", user);
+			callback(user);
+		}
+	], callback);
+} 
 
 exports.User = mongoose.model('User', UserSchema);
 

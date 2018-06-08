@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.invalid_user {
+	color: red;
+	display: none;
+}
+
+.registration_link {
+	color: #0275d8;
+	text-decoration: none !important;
+	cursor: pointer;
+}
+
+.active {
+	display: block;
+}

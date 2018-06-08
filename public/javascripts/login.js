@@ -1,3 +1,9 @@
+const userNotExist = () => {
+	const invalid_user = document.querySelector('.invalid_user');
+	invalid_user.className += " active";
+	console.log(invalid_user);
+}
+
 function sendUserDate() {
 	const loginForm = document.forms['loginForm'];
 	const elements = loginForm.elements;
@@ -5,10 +11,10 @@ function sendUserDate() {
 	const loginValue = elements.login.value;
 	const passwordValue = elements.password.value;
 
-	return fetch("/login", {
+	fetch("/login", {
 		method: "POST",
 		headers: {
-		  // 'Accept': 'application/json',
+		  'Accept': 'application/json',
 		  'Content-Type': 'application/json'
 		},
 		credentials: "include",
@@ -17,17 +23,20 @@ function sendUserDate() {
 			password: passwordValue
 		})
 	})
-	.then(response => {
-		let res = response;
-		// window.location.href = "/login";
-		console.log(res.json());
-		return res;
+	.then((response) => {
+		console.log('response', response)
+		return response.json();
 	})
 	.then(function(userObj) {
 	  console.log("userObj", userObj);
+	  if (userObj.err) {
+	  	userNotExist();
+		}
+		window.location.href = '/chat';
 	  // alert(userObj);
 	})
-	.catch(error => console.error(error))
+	.catch(error => console.error(error));
 	console.log("sendUserDate", loginValue, passwordValue);
 	return true;
 }
+
