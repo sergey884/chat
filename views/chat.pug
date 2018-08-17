@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  script(type="text/javascript", defer=true, src="/socket.io/socket.io.js")
+  script(type="text/javascript", defer=true, src="/javascripts/socket.js")
+  ul(id="chatMessage")
+  form(
+    name="chatForm"
+  )
+    div(class="form-group")
+      label(for="chatText") Message
+      input(type="text", name="chatText", class="form-control", placeholder="")
+    button(type="button", class="btn btn-primary", onClick="sendMessage()") SEND
+  h1= userId

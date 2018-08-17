@@ -1,19 +1,28 @@
 const { User } = require('../models/user');
 
-exports.get = function(req, res) {
-	res.render('registration');
-}
+const renderRegistrationPage = (req, res) => {
+  res.render('registration');
+};
 
-exports.post = function(req, res, next) {
-	console.log("registration POST");
-	const {
-		login,
-		email,
-		password,
-		repeatedPassword,
-	} = req.body;
+const addNewUser = (req, res, next) => {
+  console.log("registration POST");
+  const {
+    login,
+    email,
+    password,
+    repeatedPassword,
+  } = req.body;
 
-	User.addNewUser(req.body, function(err, user) {
-		console.log('addNewUser', user);
-	});
-}
+  User.addNewUser(req.body, (err, user) => {
+    if (err) throw err;
+
+    res.status(200);
+    res.json(user);
+    res.end();
+
+    console.log('addNewUser!!', user);
+  });
+};
+
+exports.get = renderRegistrationPage;
+exports.post = addNewUser;
